@@ -13,7 +13,7 @@ jobs:
           g++ -std=c++17 -O2 -Wall -Wextra -pedantic tests/realtime_tests.cpp -o build/realtime-tests
           ./build/realtime-tests
   mac-app:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v7
       - name: Build and check native audio I/O
