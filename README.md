@@ -4,6 +4,8 @@ A native Mac app for preparing spoken recordings: reduce low rumble, gently redu
 
 **First release, v0.1.0.** C++17 audio engine and a C++23 Audio Unit target; Objective-C++/AppKit interface and Apple's audio file/playback frameworks. Built by Aymen Al-Tahmschi with Codex assistance.
 
+![VoicePrep native Mac interface](docs/desktop.png)
+
 ## A concrete task
 
 You have a recorded presentation or interview whose voice level varies and which contains low-frequency vibration. Open it, adjust the three controls, listen to Original and Prepared at the same playback position, and export a WAV for your editor.
@@ -72,4 +74,4 @@ The final three arguments are rumble Hz, leveling percent, and output gain dB. T
 
 Thirteen offline C++ checks cover bypass, frequency response, compression, linked stereo balance, peak protection, silence, supported sample rates, block invariance and invalid inputs. Fifteen additional real-time checks cover transient protection, linked stereo, exact delay, callback boundaries, rapid automation, nonfinite host input and smoothing. Five native export-safety scenarios prevent overwriting the source, including symlink/hard-link aliases. Four Python integration tests exercise Apple's real file I/O, deterministic speech export, original-file preservation, existing-output rejection and malformed inputs. See [verification](docs/verification.md).
 
-The Audio Unit passed Apple `auval` locally. A real AVAudioEngine host rendered mono/stereo audio and verified sample peaks, restored state and reported latency. The CI workflow runs portable Linux DSP checks and macOS app/plug-in/file I/O checks; hosted execution is not yet claimed. The first release does not establish that users prefer the processed sound. A listening trial with the owner’s own presentation/interview material remains product validation.
+The Audio Unit passed Apple `auval` locally. A real AVAudioEngine host rendered mono/stereo audio and verified sample peaks, restored state and reported latency. The CI workflow runs portable Linux DSP checks and macOS app/plug-in/file I/O checks; [Hosted Linux and macOS verification](https://github.com/aaltahms/voiceprep/actions) has also passed. The first release does not establish that users prefer the processed sound. A listening trial with the owner’s own presentation/interview material remains product validation.
