@@ -1,0 +1,34 @@
+name: VoicePrep verification
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  dsp:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Portable C++ engine
+        run: |
+          mkdir -p build
+          g++ -std=c++17 -O2 -Wall -Wextra -pedantic tests/dsp_tests.cpp -o build/dsp-tests
+          ./build/dsp-tests
+          g++ -std=c++17 -O2 -Wall -Wextra -pedantic tests/realtime_tests.cpp -o build/realtime-tests
+          ./build/realtime-tests
+  mac-app:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build and check native audio I/O
+        run: |
+          sh ./build.sh
+          ./build/plugin-host "$PWD/dist/VoicePrep.component"
+          sh ./install-plugin.sh
+          auval -a
+          auval -v aufx Vprp Aalt
+          python3 -B -m unittest discover -s tests -p 'test_*.py' -v
+          ditto -c -k --keepParent dist/VoicePrep.app dist/VoicePrep-mac.zip
+          ditto -c -k --keepParent dist/VoicePrep.component dist/VoicePrep-AU.zip
+      - uses: actions/upload-artifact@v7
+        with:
+          name: VoicePrep-local-build
+          path: |
+            dist/VoicePrep-mac.zip
+            dist/VoicePrep-AU.zip
