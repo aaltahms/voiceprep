@@ -21,7 +21,12 @@ jobs:
           sh ./build.sh
           ./build/plugin-host "$PWD/dist/VoicePrep.component"
           sh ./install-plugin.sh
-          auval -a
+          attempt=0
+          until auval -a 2>/dev/null | grep -q '^aufx Vprp Aalt'; do
+            attempt=$((attempt + 1))
+            [ "$attempt" -lt 20 ] || { echo "VoicePrep was not discovered by the Audio Unit registry"; exit 1; }
+            sleep 1
+          done
           auval -v aufx Vprp Aalt
           python3 -B -m unittest discover -s tests -p 'test_*.py' -v
           ditto -c -k --keepParent dist/VoicePrep.app dist/VoicePrep-mac.zip
