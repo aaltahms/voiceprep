@@ -1,0 +1,11 @@
+# Implementation choices — October 17, 2026
+
+The product task is preparing a spoken recording for reuse in a presentation, interview or voiceover. The first milestone is a complete native listening/export flow, using a small independently inspectable C++ signal chain.
+
+JUCE's official DSP tutorial establishes a path for standalone and plug-in audio products: https://juce.com/tutorials/tutorial_dsp_introduction/ . Its audio development course covers processing, parameter handling, testing and distribution: https://juce.com/learn/course/ . JUCE was considered as a later cross-platform/plugin host. The first Mac build uses Apple's installed native frameworks so its build needs no downloaded UI framework, package manager, network service or API credential. This does not provide a JUCE/AU/VST plug-in.
+
+Apple AVAudioFile handles decoding and writing: https://developer.apple.com/documentation/avfaudio/avaudiofile . Files are read as planar floating-point samples and converted to the engine's interleaved storage. Output preserves frame count, sample rate and channels. AVAudioPlayer's scheduled playback supports aligned Original and Prepared auditions: https://developer.apple.com/documentation/avfaudio/avaudioplayer/play(attime:) . Matching uses whole-file RMS and is clearly labeled as average-volume comparison, not an implementation of ITU loudness measurement.
+
+The Open Speech Repository explicitly permits modified and before/after speech examples with attribution: https://www.voiptroubleshooter.com/open_speech/ . Its source recording, hashes and introduced faults are documented in examples/. A constructed impairment on human speech is useful repeatable evidence of filter behavior. It is not a substitute for listening to the owner's own recordings or evidence of product demand.
+
+All source for the app and DSP was written for this project with Codex assistance. No JUCE, DaisySP, or other upstream DSP code is bundled. The engine uses a second-order Butterworth high-pass and a documented linked compression rule. Existing audio editors already offer these effects; this project's hypothesis is that a small native workflow can make a focused speech-preparation task easier. That hypothesis still requires user validation.
