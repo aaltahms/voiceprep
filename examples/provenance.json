@@ -1,0 +1,9 @@
+{
+  "source": "Open Speech Repository",
+  "source_url": "https://www.voiptroubleshooter.com/open_speech/american/OSR_us_000_0010_8k.wav",
+  "conditions": "https://www.voiptroubleshooter.com/open_speech/",
+  "source_sha256": "a4bf9becd046d7aedb6d05b6e12347a6294a44f74d263089c636fb0a2b1e6561",
+  "example_sha256": "261082d834312892f6422a1952388412b009ae0548bb9ec6d7f06d1669f46cf9",
+  "description": "First 18 seconds of a human speech recording; deliberately added 35Hz rumble and smoothly varying speech gain. Source is 8kHz mono telephone-band speech.",
+  "sample_rate": 8000
+}
