@@ -33,11 +33,12 @@ A five-run local benchmark rendered a 30-second, 48 kHz stereo synthetic tone in
 - Playback advances the actual recording time. Switching Original/Prepared retains the advancing timeline. Both players use one scheduled device start and a 12 ms audition crossfade. Average-volume matching is an optional attenuation-only comparison aid.
 - The rumble slider was changed from 80 to 100 Hz; the recording was prepared again while retaining the paused position.
 - The native Save panel wrote `native-export-check.wav`. Independent file inspection confirmed mono, 8 kHz, 144,000 frames and 24-bit PCM. Every byte matched a separate CLI invocation at the same settings.
+- The October 20 final native export also matched the CLI byte for byte (mono, 8 kHz, 144,000 frames, 24-bit PCM). Choosing Replace for a disposable opened original was refused by the writer; the source SHA-256 stayed unchanged, and a subsequent export under a different name succeeded.
 - A malformed `.wav` was rejected; the previous recording and controls remained available. The system's cryptic decoder message was replaced with an actionable recovery message in the final build.
 - Standard native controls and keyboard shortcuts provide access to playback, seeking, settings, open and export. Visual inspection confirmed the complete desktop layout. This is not an accessibility certification.
 
 ## Boundaries and next product validation
 
-No VST, LUFS implementation, true-peak limiter, denoising model, clipped-audio restoration or user preference study is claimed. AUv2 validation does not establish compatibility with every third-party DAW. The native application is locally ad-hoc signed; it is not notarized. The GitHub Actions configuration is prepared, but no hosted run is claimed before publication.
+No VST, LUFS implementation, true-peak limiter, denoising model, clipped-audio restoration or user preference study is claimed. AUv2 validation does not establish compatibility with every third-party DAW. The native application is locally ad-hoc signed; it is not notarized. [Hosted Linux and macOS verification](https://github.com/aaltahms/voiceprep/actions/runs/39476399080) passed, including native builds, real host rendering, installed-component Audio Unit validation and file I/O checks. The macOS job waits for asynchronous component discovery.
 
 The next product milestone is a listening trial on the owner's actual presentation/interview recordings, with comparisons at similar volume. The live path uses a lookahead limiter; offline export uses one whole-file trim, so their dynamics can differ when peak protection engages.
